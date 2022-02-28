@@ -1,6 +1,6 @@
 <?php
 
-namespace F2h2h1\Yii2Tinymce;
+namespace pjkui\Yii2Tinymce;
 
 use Yii;
 use yii\base\Model;
@@ -151,7 +151,7 @@ class TinyMCE extends Widget
     public static function tinyMCEToolbar($toolbar = null)
     {
         if ($toolbar === null) {
-            // undo redo | image | styleselect | bold italic | alignleft aligncenter alignright alignjustify | table 
+            // undo redo | image | styleselect | bold italic | alignleft aligncenter alignright alignjustify | table
             $toolbar = [
                 ['undo', 'redo'],
                 ['image'],

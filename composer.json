@@ -1,5 +1,5 @@
 {
-    "name": "f2h2h1/yii2-tinymce",
+    "name": "pjkui/yii2-tinymce",
     "description": "tinymce integration for yii2",
     "keywords": [
         "yii2",
@@ -11,8 +11,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "f2h2h1",
-            "email": "mP6iB1hB@outlook.com"
+            "name": "quinn pan",
+            "email": "pjkui@qq.com"
         }
     ],
     "require": {
@@ -25,7 +25,7 @@
     },
     "autoload": {
         "psr-4": {
-            "F2h2h1\\Yii2Tinymce\\": "src/"
+            "pjkui\\Yii2Tinymce\\": "src/"
         }
     }
 }
