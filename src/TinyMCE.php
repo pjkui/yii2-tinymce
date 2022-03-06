@@ -135,6 +135,15 @@ class TinyMCE extends Widget
                 'charmap',
                 'emoticons',
                 'code',
+                'autoresize',
+                'autosave',
+                'bbcode',
+                'charmap',
+                'colorpicker',
+                'quickbars',
+                'save',
+                'tabfocus'
+
             ];
         }
 
@@ -159,13 +168,13 @@ class TinyMCE extends Widget
                 ['bold', 'italic'],
                 ['alignleft', 'aligncenter', 'alignright', 'alignjustify'],
                 ['table'],
-                ['preview'],
+                ['preview', 'save', 'toc', 'tabfocus', 'quickbars', 'noneditable'],
             ];
         }
 
         return join(' | ', array_map(function ($item) {
-                        return join(' ', $item);
-                    }, $toolbar));
+            return join(' ', $item);
+        }, $toolbar));
     }
 
     /**
@@ -184,7 +193,7 @@ class TinyMCE extends Widget
             $this->tagAttribute['name'] = $this->hasModel() ? Html::getInputName($this->model, $this->attribute) : $this->tagAttribute['id'];
         }
         if (!empty($this->tagAttribute['id'])) {
-            $this->options['selector'] = '#'.$this->tagAttribute['id'];
+            $this->options['selector'] = '#' . $this->tagAttribute['id'];
         }
         if (!empty($this->selector)) {
             $this->options['selector'] = $this->selector;
@@ -231,7 +240,7 @@ class TinyMCE extends Widget
 
         $error = $this->registerPlugin($view);
         if ($error !== null) {
-            return '<span>'.$error.'</span>';
+            return '<span>' . $error . '</span>';
         }
 
         if ($this->tagType == self::TEXTAREA) {
@@ -269,13 +278,13 @@ class TinyMCE extends Widget
                 return 'missing elfinder connector url';
             }
             list(, $path) = Yii::$app->assetManager->publish(__DIR__);
-            $view->registerJsFile($path.'/tinymceElfinder.js');
+            $view->registerJsFile($path . '/tinymceElfinder.js');
             $init .= sprintf("%s: %s,", 'file_picker_callback', 'mceElf.browser');
             // $init .= sprintf("%s: %s,", 'images_upload_handler', 'mceElf.uploadHandler');
-            $js .= 'const mceElf = new tinymceElfinder('.json_encode($this->elfinder).');';
+            $js .= 'const mceElf = new tinymceElfinder(' . json_encode($this->elfinder) . ');';
         }
 
-        $js .= 'tinymce.init({'.$init.'});';
+        $js .= 'tinymce.init({' . $init . '});';
         $view->registerJs($js);
 
         return null;
