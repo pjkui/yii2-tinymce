@@ -168,7 +168,7 @@ class TinyMCE extends Widget
                 ['bold', 'italic'],
                 ['alignleft', 'aligncenter', 'alignright', 'alignjustify'],
                 ['table'],
-                ['preview', 'save', 'toc', 'tabfocus', 'quickbars', 'noneditable'],
+                ['preview', 'save', 'toc', 'bbcode'],
             ];
         }
 
@@ -263,7 +263,11 @@ class TinyMCE extends Widget
         $js = '';
         $init = '';
         foreach ($this->options as $key => $item) {
-            $init .= sprintf("%s: '%s',", $key, $item);
+            if (is_bool($item) || is_int($item)) {
+                $init .= sprintf("%s: %d,", $key, $item);
+            } else {
+                $init .= sprintf("%s: '%s',", $key, $item);
+            }
         }
         $init .= <<<EOF
             content_style: ".ty-float-right { float: right; } .ty-float-left { float: left; }",
