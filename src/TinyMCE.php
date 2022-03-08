@@ -137,7 +137,7 @@ class TinyMCE extends Widget
                 'code',
                 'autoresize',
                 'autosave',
-                'bbcode',
+                // 'bbcode',
                 'charmap',
                 'colorpicker',
                 'quickbars',
@@ -217,11 +217,11 @@ class TinyMCE extends Widget
         }
 
         if (empty($this->defaultValue) && $this->hasModel()) {
-            // $arr = $this->model->getAttributes([$this->attribute]);
-            // if (isset($arr[$this->attribute])) {
-            //     $this->defaultValue = $arr[$this->attribute];
-            // }
-            $this->defaultValue = $this->value;
+            $arr = $this->model->getAttributes([$this->attribute]);
+            if (isset($arr[$this->attribute])) {
+                $this->defaultValue = $arr[$this->attribute];
+            }
+            // $this->defaultValue = $this->value;
         }
 
         parent::init();
@@ -283,7 +283,10 @@ class TinyMCE extends Widget
             }
             list(, $path) = Yii::$app->assetManager->publish(__DIR__);
             $view->registerJsFile($path . '/tinymceElfinder.js');
-            $init .= sprintf("%s: %s,", 'file_picker_callback', 'mceElf.browser');
+
+            $init .= sprintf("%s: %s,", 'file_picker_callback', 'mceElf.filePicker');
+            // $init .= sprintf("%s: %s,", 'file_picker_callback', 'mceElf.browser');
+            $init .= sprintf("%s: %s,", 'images_upload_handler', 'mceElf.uploadFile');
             // $init .= sprintf("%s: %s,", 'images_upload_handler', 'mceElf.uploadHandler');
             $js .= 'const mceElf = new tinymceElfinder(' . json_encode($this->elfinder) . ');';
         }
