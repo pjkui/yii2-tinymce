@@ -163,7 +163,7 @@ class TinyMCE extends Widget
             // undo redo | image | styleselect | bold italic | alignleft aligncenter alignright alignjustify | table
             $toolbar = [
                 ['undo', 'redo'],
-                ['image'],
+                ['image', 'fullscreen'],
                 ['styleselect'],
                 ['bold', 'italic'],
                 ['alignleft', 'aligncenter', 'alignright', 'alignjustify'],
