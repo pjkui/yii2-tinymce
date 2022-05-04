@@ -112,7 +112,7 @@ window.tinymceElfinder = function (opts) {
                                         ) + 100
                                     );
                                 },
-                                getFileCallback: (files, fm) => {},
+                                getFileCallback: (files, fm) => { },
                             },
                             opts
                         )
@@ -180,15 +180,15 @@ window.tinymceElfinder = function (opts) {
                         file = blobInfo.blob(),
                         clipdata = true;
                     const err = (e) => {
-                            var dlg = e.data.dialog || {};
-                            if (
-                                dlg.hasClass("elfinder-dialog-error") ||
-                                dlg.hasClass("elfinder-confirm-upload")
-                            ) {
-                                fmNode.dialogelfinder("open");
-                                fm.unbind("dialogopened", err);
-                            }
-                        },
+                        var dlg = e.data.dialog || {};
+                        if (
+                            dlg.hasClass("elfinder-dialog-error") ||
+                            dlg.hasClass("elfinder-confirm-upload")
+                        ) {
+                            fmNode.dialogelfinder("open");
+                            fm.unbind("dialogopened", err);
+                        }
+                    },
                         closeDlg = () => {
                             if (
                                 !fm
@@ -280,8 +280,8 @@ window.tinymceElfinder = function (opts) {
     this.uploadFile = function (blobInfo, success, failure, progress) {
         var xhr, formData;
         xhr = new XMLHttpRequest();
-        xhr.withCredentials = false;
-        xhr.open("POST", "/?r=site/upload");
+        xhr.withCredentials = true;
+        xhr.open("POST", opts.url);
 
         xhr.upload.onprogress = function (e) {
             progress((e.loaded / e.total) * 100);
@@ -308,12 +308,20 @@ window.tinymceElfinder = function (opts) {
         xhr.onerror = function () {
             failure(
                 "Image upload failed due to a XHR Transport error. Code: " +
-                    xhr.status
+                xhr.status
             );
         };
 
         formData = new FormData();
         formData.append("file", blobInfo.blob(), blobInfo.filename());
+        if (opts.customData != null) {
+            for (const key in opts.customData) {
+                if (Object.hasOwnProperty.call(opts.customData, key)) {
+                    const val1 = opts.customData[key];
+                    formData.append(key, val1);
+                }
+            }
+        }
 
         xhr.send(formData);
     };
@@ -322,7 +330,7 @@ window.tinymceElfinder = function (opts) {
         var filetype =
             ".pdf, .txt, .zip, .rar, .7z, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .mp3, .mp4";
         //后端接收上传文件的地址
-        var upurl = "/?r=site/upload&type=image";
+        var upurl = opts.url + "&type=image";
         //为不同插件指定文件类型及后端地址
         switch (meta.filetype) {
             case "image":
@@ -332,10 +340,10 @@ window.tinymceElfinder = function (opts) {
             case "media":
                 filetype = ".mp3, .mp4";
                 // upurl = "upfile.php";
-                upurl = "/?r=site/upload&type=file";
+                upurl = opts.url + "&type=file";
                 break;
             case "file":
-                upurl = "/?r=site/upload&type=file";
+                upurl = opts.url + "&type=file";
             default:
         }
         //模拟出一个input用于添加本地文件
