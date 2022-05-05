@@ -142,8 +142,8 @@ class TinyMCE extends Widget
                 'colorpicker',
                 'quickbars',
                 'save',
-                'tabfocus'
-
+                'tabfocus',
+                'paste'
             ];
         }
 
@@ -163,7 +163,7 @@ class TinyMCE extends Widget
             // undo redo | image | styleselect | bold italic | alignleft aligncenter alignright alignjustify | table
             $toolbar = [
                 ['undo', 'redo'],
-                ['image', 'fullscreen'],
+                ['image', 'fullscreen','paste'],
                 ['styleselect'],
                 ['bold', 'italic'],
                 ['alignleft', 'aligncenter', 'alignright', 'alignjustify'],
@@ -285,8 +285,11 @@ class TinyMCE extends Widget
             $view->registerJsFile($path . '/tinymceElfinder.js');
 
             $init .= sprintf("%s: %s,", 'file_picker_callback', 'mceElf.filePicker');
+            $init .= sprintf("%s: %s,", 'automatic_uploads', 'true');
+            $init .= sprintf("%s: %s,", 'paste_data_images', 'true');
             // $init .= sprintf("%s: %s,", 'file_picker_callback', 'mceElf.browser');
             $init .= sprintf("%s: %s,", 'images_upload_handler', 'mceElf.uploadFile');
+            $init .= sprintf("%s: %s,", 'paste_postprocess', 'mceElf.pastePostAction');
             // $init .= sprintf("%s: %s,", 'images_upload_handler', 'mceElf.uploadHandler');
             $js .= 'const mceElf = new tinymceElfinder(' . json_encode($this->elfinder) . ');';
         }

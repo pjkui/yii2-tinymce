@@ -396,4 +396,14 @@ window.tinymceElfinder = function (opts) {
             reader.readAsDataURL(file);*/
         };
     };
+    this.pastePostAction = (editor, args) => {
+        console.log("start uploading ...");
+        setTimeout(()=>{
+            tinymce.activeEditor.uploadImages(function(success) {
+                console.log("upload end ",success);
+                // document.forms[0].submit();
+                  });
+        },1500);
+  
+    };
 };
